@@ -1,0 +1,7 @@
+Django==6.0.3
+djangorestframework==3.16.1
+djangorestframework_simplejwt==5.5.1
+gunicorn
+dj-database-url
+whitenoise
+psycopg2-binary
