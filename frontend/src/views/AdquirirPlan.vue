@@ -87,7 +87,7 @@ const enviarPago = async () => {
                     Activa tu <span class="text-emerald-400">Acceso</span>
                 </h1>
                 <p class="text-gray-400 mt-4 text-sm">Hola <span class="text-white font-bold">{{ userData?.nombre
-                        }}</span>, selecciona un plan y sube tu comprobante para continuar.</p>
+                }}</span>, selecciona un plan y sube tu comprobante para continuar.</p>
             </header>
 
             <div class="space-y-8">
@@ -114,42 +114,40 @@ const enviarPago = async () => {
                                 class="text-xs text-gray-500">/año</span></p>
                         <p class="text-[10px] text-gray-400 mt-2 font-bold uppercase tracking-widest">Ahorra 2 meses de
                             suscripción</p>
-                    </button> 
-                </div> -->
-
-                    <div class="space-y-4">
-                        <label
-                            class="block text-[10px] font-black text-gray-500 uppercase tracking-widest ml-2">Comprobante
-                            de Pago (Capture)</label>
-                        <div class="relative group">
-                            <input type="file" @change="manejarArchivo" accept="image/*" class="hidden"
-                                id="pago-file" />
-                            <label for="pago-file"
-                                class="cursor-pointer flex flex-col items-center justify-center w-full min-h-[200px] border-2 border-dashed border-white/10 rounded-[2rem] bg-white/[0.02] hover:bg-white/[0.05] hover:border-purple-500/50 transition-all overflow-hidden relative">
-
-                                <div v-if="!vistaPrevia" class="flex flex-col items-center p-6 text-center">
-                                    <div
-                                        class="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">
-                                        🖼️</div>
-                                    <span class="text-xs font-black text-gray-400 uppercase tracking-wider">Toca para
-                                        seleccionar imagen</span>
-                                    <span class="text-[9px] text-gray-600 mt-2">Formatos aceptados: JPG, PNG</span>
-                                </div>
-
-                                <img v-else :src="vistaPrevia" class="w-full h-full object-contain max-h-[300px] p-2" />
-                            </label>
-                        </div>
-                    </div>
-
-                    <button @click="enviarPago" :disabled="isLoading"
-                        class="w-full py-5 bg-white text-black font-black rounded-[1.5rem] uppercase tracking-[0.2em] text-xs shadow-[0_10px_30px_rgba(255,255,255,0.1)] hover:bg-purple-600 hover:text-white hover:scale-[1.02] transition-all active:scale-95 disabled:opacity-50">
-                        {{ isLoading ? 'Procesando Envío...' : 'Confirmar Reporte de Pago' }}
-                    </button>
+                    </button> -->
                 </div>
 
-                <p class="text-center text-[9px] text-gray-600 uppercase font-black tracking-widest mt-8">
-                    Tus datos están protegidos bajo encriptación JWT de 256 bits
-                </p>
+                <div class="space-y-4">
+                    <label class="block text-[10px] font-black text-gray-500 uppercase tracking-widest ml-2">Comprobante
+                        de Pago (Capture)</label>
+                    <div class="relative group">
+                        <input type="file" @change="manejarArchivo" accept="image/*" class="hidden" id="pago-file" />
+                        <label for="pago-file"
+                            class="cursor-pointer flex flex-col items-center justify-center w-full min-h-[200px] border-2 border-dashed border-white/10 rounded-[2rem] bg-white/[0.02] hover:bg-white/[0.05] hover:border-purple-500/50 transition-all overflow-hidden relative">
+
+                            <div v-if="!vistaPrevia" class="flex flex-col items-center p-6 text-center">
+                                <div
+                                    class="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center text-3xl mb-4 group-hover:scale-110 transition-transform">
+                                    🖼️</div>
+                                <span class="text-xs font-black text-gray-400 uppercase tracking-wider">Toca para
+                                    seleccionar imagen</span>
+                                <span class="text-[9px] text-gray-600 mt-2">Formatos aceptados: JPG, PNG</span>
+                            </div>
+
+                            <img v-else :src="vistaPrevia" class="w-full h-full object-contain max-h-[300px] p-2" />
+                        </label>
+                    </div>
+                </div>
+
+                <button @click="enviarPago" :disabled="isLoading"
+                    class="w-full py-5 bg-white text-black font-black rounded-[1.5rem] uppercase tracking-[0.2em] text-xs shadow-[0_10px_30px_rgba(255,255,255,0.1)] hover:bg-purple-600 hover:text-white hover:scale-[1.02] transition-all active:scale-95 disabled:opacity-50">
+                    {{ isLoading ? 'Procesando Envío...' : 'Confirmar Reporte de Pago' }}
+                </button>
             </div>
+
+            <p class="text-center text-[9px] text-gray-600 uppercase font-black tracking-widest mt-8">
+                Tus datos están protegidos bajo encriptación JWT de 256 bits
+            </p>
         </div>
+    </div>
 </template>
