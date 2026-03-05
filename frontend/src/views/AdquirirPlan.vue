@@ -45,7 +45,7 @@ const enviarPago = async () => {
 
     try {
         const token = localStorage.getItem('access_token')
-        await axios.post('http://localhost:8000/api/pagos/reportar/', formData, {
+        await axios.post('https://deploy-reny.onrender.com/api/pagos/reportar/', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
                 'Authorization': `Bearer ${token}`
@@ -87,7 +87,7 @@ const enviarPago = async () => {
                     Activa tu <span class="text-emerald-400">Acceso</span>
                 </h1>
                 <p class="text-gray-400 mt-4 text-sm">Hola <span class="text-white font-bold">{{ userData?.nombre
-                        }}</span>, selecciona un plan y sube tu comprobante para continuar.</p>
+                }}</span>, selecciona un plan y sube tu comprobante para continuar.</p>
             </header>
 
             <div class="space-y-8">

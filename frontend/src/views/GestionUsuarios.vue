@@ -12,7 +12,7 @@ const searchQuery = ref('') // Sincronizado con el input
 // Configuración de Axios
 const token = localStorage.getItem('access_token')
 const api = axios.create({
-    baseURL: 'http://localhost:8000/api/',
+    baseURL: 'https://deploy-reny.onrender.com/api/',
     headers: { Authorization: `Bearer ${token}` }
 })
 
@@ -185,7 +185,7 @@ onMounted(obtenerUsuarios)
                                         <span class="text-sm font-black text-white uppercase">{{ user.nombre }} {{
                                             user.apellido }}</span>
                                         <span class="text-[10px] font-medium text-slate-500 lowercase">{{ user.email
-                                            }}</span>
+                                        }}</span>
                                         <span class="text-[9px] font-black text-indigo-400 mt-1 uppercase">C.I: {{
                                             user.ci || 'N/A' }}</span>
                                     </div>

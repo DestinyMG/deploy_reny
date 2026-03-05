@@ -22,7 +22,7 @@ const obtenerPagos = async () => {
     loading.value = true
     try {
         const token = localStorage.getItem('access_token')
-        const response = await axios.get('http://localhost:8000/api/pagos/reportar/', {
+        const response = await axios.get('https://deploy-reny.onrender.com/api/pagos/reportar/', {
             headers: { Authorization: `Bearer ${token}` }
         })
         pagos.value = response.data
@@ -51,7 +51,7 @@ const aprobarPago = async (pago) => {
         try {
             const token = localStorage.getItem('access_token')
             // El backend procesará la membresía y ELIMINARÁ el registro automáticamente
-            await axios.patch(`http://localhost:8000/api/pagos/reportar/${pago.id}/`,
+            await axios.patch(`https://deploy-reny.onrender.com/api/pagos/reportar/${pago.id}/`,
                 { estado: 'APROBADO' },
                 { headers: { Authorization: `Bearer ${token}` } }
             )
@@ -96,7 +96,7 @@ const rechazarPago = async (pago) => {
         try {
             const token = localStorage.getItem('access_token')
             // Ejecutamos el DELETE directo al backend
-            await axios.delete(`http://localhost:8000/api/pagos/reportar/${pago.id}/`, {
+            await axios.delete(`https://deploy-reny.onrender.com/api/pagos/reportar/${pago.id}/`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
 
@@ -168,7 +168,7 @@ onMounted(obtenerPagos)
                                 <h3 class="text-white font-black text-lg uppercase italic leading-none">{{
                                     pago.usuario_nombre }}</h3>
                                 <h3 class="text-white font-black text-lg uppercase italic mb-2">{{ pago.usuario_apellido
-                                    }}</h3>
+                                }}</h3>
                                 <div class="flex items-center gap-2">
                                     <span
                                         class="text-[10px] text-slate-500 font-bold tracking-tighter bg-white/5 px-2 py-0.5 rounded">C.I:

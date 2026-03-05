@@ -34,7 +34,7 @@ const toast = (title, icon = 'error') => {
 const handleLogin = async () => {
     isLoading.value = true
     try {
-        const response = await axios.post('http://localhost:8000/api/login/', {
+        const response = await axios.post('https://deploy-reny.onrender.com/api/login/', {
             email: form.value.login.email,
             password: form.value.login.password
         })
@@ -66,7 +66,7 @@ const handleLogin = async () => {
 const handleRegister = async () => {
     isLoading.value = true
     try {
-        await axios.post('http://localhost:8000/api/usuarios/', form.value.register)
+        await axios.post('https://deploy-reny.onrender.com/api/usuarios/', form.value.register)
 
         await Swal.fire({
             title: '¡CUENTA CREADA!',
