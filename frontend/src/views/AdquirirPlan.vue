@@ -87,7 +87,7 @@ const enviarPago = async () => {
                     Activa tu <span class="text-emerald-400">Acceso</span>
                 </h1>
                 <p class="text-gray-400 mt-4 text-sm">Hola <span class="text-white font-bold">{{ userData?.nombre
-                }}</span>, selecciona un plan y sube tu comprobante para continuar.</p>
+                        }}</span>, selecciona un plan y sube tu comprobante para continuar.</p>
             </header>
 
             <div class="space-y-8">
@@ -146,7 +146,7 @@ const enviarPago = async () => {
             </div>
 
             <p class="text-center text-[9px] text-gray-600 uppercase font-black tracking-widest mt-8">
-                Tus datos están protegidos bajo encriptación JWT de 256 bits
+                <!-- Tus datos están protegidos bajo encriptación JWT de 256 bits -->
             </p>
         </div>
     </div>
