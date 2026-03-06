@@ -2,17 +2,21 @@ from rest_framework import serializers
 from .models import Pago
 
 class PagoSerializer(serializers.ModelSerializer):
-    # Traemos los datos específicos del modelo Usuario relacionado
+    # Datos para mostrar en el panel de administrador
     usuario_nombre = serializers.ReadOnlyField(source='usuario.nombre')
     usuario_apellido = serializers.ReadOnlyField(source='usuario.apellido')
     usuario_ci = serializers.ReadOnlyField(source='usuario.ci')
     usuario_email = serializers.ReadOnlyField(source='usuario.email')
+    
+    # --- ESTA ES LA LÍNEA CLAVE QUE FALTA ---
+    # Permite que la vista asigne el usuario sin que el frontend lo envíe
+    usuario = serializers.ReadOnlyField(source='usuario.id')
 
     class Meta:
         model = Pago
-        # Incluimos los nuevos campos en la lista de fields
         fields = [
             'id', 
+            'usuario', # <--- Agrégalo aquí
             'usuario_nombre', 
             'usuario_apellido', 
             'usuario_ci', 
@@ -21,5 +25,4 @@ class PagoSerializer(serializers.ModelSerializer):
             'plan_solicitado', 
             'fecha_envio'
         ]
-        # Marcamos como solo lectura para que no interfieran en el POST
         read_only_fields = ['id', 'fecha_envio']
