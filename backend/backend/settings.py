@@ -155,6 +155,9 @@ SIMPLE_JWT = {
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+if not os.path.exists(MEDIA_ROOT):
+    os.makedirs(MEDIA_ROOT)
+
 
 # Directorio donde Django recolectará archivos estáticos para producción
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
