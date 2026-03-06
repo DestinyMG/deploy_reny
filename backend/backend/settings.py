@@ -163,7 +163,13 @@ if not os.path.exists(MEDIA_ROOT):
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Soporte para compresión y caché de archivos estáticos
+# Busca este bloque en tu settings.py y reemplázalo:
 STORAGES = {
+    # Para los archivos de imagen (Media)
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    # Para los archivos CSS, JS (WhiteNoise)
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
