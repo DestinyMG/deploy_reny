@@ -10,14 +10,14 @@ const error = ref('')
 // --- LÓGICA DE APORTES NUTRICIONALES ---
 const mostrarAportes = ref(false)
 const nutrientes = ref([
-    { id: 'ms', label: '% Materia Seca (MS)', a: 0, b: 0 },
+    { id: 'ms', label: 'kg Materia Seca (MS)', a: 0, b: 0 },
     { id: 'em', label: 'En. Metabólica (EM)', a: 0, b: 0 },
-    { id: 'fdb', label: '% Fibra Det. Neutro (FDN)', a: 0, b: 0 },
-    { id: 'cen', label: '% Ceniza', a: 0, b: 0 },
-    { id: 'fc', label: '% Fibra Cruda', a: 0, b: 0 },
-    { id: 'ee', label: '% Ext. Etéreo (EE)', a: 0, b: 0 },
-    { id: 'ca', label: '% Calcio (Ca)', a: 0, b: 0 },
-    { id: 'p', label: '% Fósforo (P)', a: 0, b: 0 },
+    { id: 'fdb', label: 'kg Fibra Det. Neutro (FDN)', a: 0, b: 0 },
+    { id: 'cen', label: 'kg Ceniza', a: 0, b: 0 },
+    { id: 'fc', label: 'kg Fibra Cruda', a: 0, b: 0 },
+    { id: 'ee', label: 'kg Ext. Etéreo (EE)', a: 0, b: 0 },
+    { id: 'ca', label: 'kg Calcio (Ca)', a: 0, b: 0 },
+    { id: 'p', label: 'kg Fósforo (P)', a: 0, b: 0 },
 ])
 
 // --- FACTOR DE VITAMINA ---
@@ -67,7 +67,7 @@ const calcularTotalNutriente = (n) => {
     if (!resultados.value) return 0
     const x1 = resultados.value.pesoA / 100
     const x2 = resultados.value.pesoB / 100
-    return ((n.a * x1) + (n.b * x2)).toFixed(3)
+    return ((n.a * x1) + (n.b * x2)).toFixed(2)
 }
 
 // Watch para cuando cambia la vitamina, recalcular si hay resultados
@@ -117,7 +117,7 @@ watch(() => inputs.value.pv, (nuevoValor, valorAnterior) => {
                         <!-- Nuevo input para vitamina -->
                         <div>
                             <label
-                                class="block text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-3 ml-1">%
+                                class="block text-[10px] font-black text-emerald-500 uppercase tracking-widest mb-3 ml-1">kg
                                 Vitamina a Restar (Opcional)</label>
                             <input type="number" v-model="inputs.pv"
                                 class="w-full bg-[#020617] border border-emerald-500/30 rounded-2xl px-6 py-4 text-white focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10 outline-none transition-all"
@@ -133,8 +133,8 @@ watch(() => inputs.value.pv, (nuevoValor, valorAnterior) => {
                         <div v-if="inputs.pv"
                             class="text-center p-2 bg-emerald-500/5 rounded-xl border border-emerald-500/20">
                             <span class="text-[9px] font-black text-emerald-400 uppercase tracking-wider">
-                                Factor de ajuste: {{ ((100 - parseFloat(inputs.pv || 0)) / 100).toFixed(3) }} |
-                                Restando {{ inputs.pv }}% de vitamina
+                                Factor de ajuste: {{ ((100 - parseFloat(inputs.pv || 0)) / 100).toFixed(2) }} |
+                                Restando {{ inputs.pv }}kg de vitamina
                             </span>
                         </div>
 
@@ -173,9 +173,9 @@ watch(() => inputs.value.pv, (nuevoValor, valorAnterior) => {
                             <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest">Suma
                                 Total:</span>
                             <span class="text-xl font-black text-emerald-400">{{ (resultados.pesoA +
-                                resultados.pesoB).toFixed(2) }}%</span>
+                                resultados.pesoB).toFixed(2) }}kg</span>
                             <span v-if="resultados.vitamina > 0" class="text-[8px] text-slate-500">
-                                (100% - {{ resultados.vitamina }}% vitamina)
+                                (100% - {{ resultados.vitamina }}kg vitamina)
                             </span>
                         </div>
 
@@ -193,17 +193,13 @@ watch(() => inputs.value.pv, (nuevoValor, valorAnterior) => {
                                     <span class="text-indigo-100 font-bold">Aporte B</span>
                                     <span class="font-black text-white">{{ resultados.finalB }}%</span>
                                 </div>
-                                <div v-if="resultados.vitamina > 0"
-                                    class="flex justify-between border-b border-indigo-400/30 pb-2">
-                                    <span class="text-indigo-100 font-bold">Vitamina</span>
-                                    <span class="font-black text-emerald-300">{{ resultados.vitamina }}%</span>
-                                </div>
+
                                 <div class="flex justify-between pt-2">
                                     <span class="text-white font-black text-xl italic uppercase">Total Objetivo
                                         (%E)</span>
                                     <span
                                         class="text-3xl font-black text-white underline decoration-indigo-300 underline-offset-8">
-                                        {{ resultados.finalE }}%
+                                        {{ resultados.finalE }}kg
                                     </span>
                                 </div>
                             </div>

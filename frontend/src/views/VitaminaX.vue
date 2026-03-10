@@ -20,14 +20,14 @@ const calculando = ref(false)
 const actualizando = ref(false)
 
 const nombresNutrientes = {
-    ms: '% MS',
-    em: 'EM',
-    fdn: '% FDN',
-    cen: '% Cen',
-    fc: '% FC',
-    ee: '% EE',
-    ca: '% Ca',
-    p: '% P'
+    ms: 'kg MS',
+    em: 'kg EM',
+    fdn: 'kg FDN',
+    cen: 'kg Cen',
+    fc: 'kg FC',
+    ee: 'kg EE',
+    ca: 'kg Ca',
+    p: 'kg P'
 }
 
 // --- GESTIÓN DE FILAS ---
@@ -143,19 +143,11 @@ const actualizarNutrientes = () => {
 }
 
 // --- ÚNICO WATCH PARA INGREDIENTES (CORREGIDO) ---
-watch(ingredientes, (nuevoValor, valorAnterior) => {
-    if (!resultados.value || actualizando.value) return
-
-    // Detectar si realmente cambiaron los nutrientes
-    const cambioNutrientes = nuevoValor.some((ing, i) => {
-        if (!valorAnterior?.[i]) return true
-        return JSON.stringify(ing.nutri) !== JSON.stringify(valorAnterior[i].nutri)
-    })
-
-    if (cambioNutrientes) {
-        nextTick(() => {
-            actualizarNutrientes()
-        })
+// --- WATCH PARA INGREDIENTES (INSTANTÁNEO) ---
+watch(ingredientes, () => {
+    // Si ya calculaste las proporciones, permite que los nutrientes se actualicen al escribir
+    if (resultados.value) {
+        actualizarNutrientes()
     }
 }, { deep: true })
 
@@ -213,7 +205,7 @@ watch(objetivo, (nuevoValor, valorAnterior) => {
                             <input type="number" v-model="vitamina" :disabled="resultados"
                                 class="w-16 bg-transparent text-white font-black text-3xl text-right outline-none disabled:opacity-50"
                                 placeholder="0" />
-                            <span class="text-emerald-400 font-black text-xl">%</span>
+                            <span class="text-emerald-400 font-black text-xl">kg</span>
                         </div>
                     </div>
                 </div>
@@ -222,7 +214,7 @@ watch(objetivo, (nuevoValor, valorAnterior) => {
                 <div v-if="vitamina" class="text-center">
                     <span class="text-[10px] font-black text-slate-500 uppercase tracking-wider">
                         Factor de ajuste: <span class="text-indigo-400">{{ ((100 - parseFloat(vitamina || 0)) /
-                            100).toFixed(3) }}</span>
+                            100).toFixed(2) }}</span>
                         (100% - {{ vitamina }}% = {{ 100 - parseFloat(vitamina || 0) }}% / 100)
                     </span>
                 </div>
@@ -290,19 +282,19 @@ watch(objetivo, (nuevoValor, valorAnterior) => {
                                             item.index }}</td>
                                         <td class="p-4 text-white/60">{{ item.valorOriginal?.toFixed(2) }}%</td>
                                         <td class="p-4"><span class="text-white font-black text-2xl tracking-tighter">{{
-                                            item.proporcionX.toFixed(4) }}</span>%</td>
+                                            item.proporcionX.toFixed(2) }}</span>%</td>
                                         <td class="p-4 text-right pr-6 font-mono font-black text-indigo-400 text-lg">{{
-                                            item.aporteProteico.toFixed(3) }}%</td>
+                                            item.aporteProteico.toFixed(2) }}%</td>
                                     </tr>
                                 </tbody>
                                 <tfoot class="bg-indigo-600/10 border-t border-indigo-500/30">
                                     <tr class="font-black italic text-sm">
                                         <td colspan="3"
                                             class="p-4 text-[9px] text-indigo-400 uppercase tracking-tighter text-left">
-                                            TOTAL INCLUSIÓN (debe ser exactamente {{ (100 - vitamina).toFixed(2) }}%)
+                                            TOTAL INCLUSIÓN (debe ser exactamente {{ (100 - vitamina).toFixed(2) }}kg)
                                         </td>
                                         <td class="p-4 text-right pr-6 text-white text-xl">{{
-                                            resultados.sumaX.toFixed(4) }}%</td>
+                                            resultados.sumaX.toFixed(2) }}kg</td>
                                     </tr>
                                     <tr class="font-black italic text-sm bg-indigo-600/20">
                                         <!-- <td colspan="3"
@@ -365,10 +357,10 @@ watch(objetivo, (nuevoValor, valorAnterior) => {
                             <div v-for="(val, key) in resultados.nutriFinales" :key="key"
                                 class="bg-indigo-500/5 border border-white/10 p-4 rounded-2xl text-center">
                                 <p class="text-[8px] font-black text-slate-500 uppercase mb-1">{{ nombresNutrientes[key]
-                                }}</p>
+                                    }}</p>
                                 <div class="text-xl font-black text-indigo-100 italic">
                                     {{ val.toFixed(2) }}<span class="text-[10px] ml-0.5 text-indigo-500">{{ key === 'em'
-                                        ? '' : '%' }}</span>
+                                        ? '' : 'kg' }}</span>
                                 </div>
                             </div>
                         </div>

@@ -19,14 +19,14 @@ const actualizando = ref(false)
 const ultimaActualizacion = ref(0)
 
 const nombresNutrientes = {
-    ms: '% MS',
-    em: 'EM',
-    fdn: '% FDN',
-    cen: '% Cen',
-    fc: '% FC',
-    ee: '% EE',
-    ca: '% Ca',
-    p: '% P'
+    ms: 'kg MS',
+    em: 'kg EM',
+    fdn: 'kg FDN',
+    cen: 'kg Cen',
+    fc: 'kg FC',
+    ee: 'kg EE',
+    ca: 'kg Ca',
+    p: 'kg P'
 }
 
 // --- GESTIÓN DE FILAS ---
@@ -107,36 +107,13 @@ const actualizarNutrientes = () => {
     resultados.value.nutriFinales = m
 }
 
-// --- ÚNICO WATCH PARA INGREDIENTES (CORREGIDO) ---
-watch(ingredientes, (nuevoValor, valorAnterior) => {
-    // Salir si no hay resultados o ya estamos actualizando
-    if (!resultados.value || actualizando.value) return
-
-    // Verificar si hubo cambios en los nutrientes (ignorar cambios en 'valor')
-    const cambiosEnNutrientes = nuevoValor.some((ing, i) => {
-        if (!valorAnterior?.[i]) return true
-        // Comparar solo los objetos nutri
-        return JSON.stringify(ing.nutri) !== JSON.stringify(valorAnterior[i].nutri)
-    })
-
-    // Solo actualizar si cambiaron los nutrientes
-    if (cambiosEnNutrientes) {
-        actualizando.value = true
-
-        // Usar requestAnimationFrame para no bloquear el hilo principal
-        requestAnimationFrame(async () => {
-            await nextTick()
-            actualizarNutrientes()
-
-            // Liberar después de un tiempo
-            setTimeout(() => {
-                actualizando.value = false
-            }, 200)
-        })
+// --- ÚNICO WATCH PARA INGREDIENTES (SIMPLIFICADO) ---
+watch(ingredientes, () => {
+    // Si ya existen resultados (las proporciones X), actualiza los nutrientes al escribir
+    if (resultados.value) {
+        actualizarNutrientes()
     }
-}, {
-    deep: true
-})
+}, { deep: true })
 
 // --- WATCH PARA OBJETIVO (MEJORADO) ---
 watch(objetivo, (nuevoValor, valorAnterior) => {
@@ -236,16 +213,16 @@ watch(objetivo, (nuevoValor, valorAnterior) => {
                                         <td class="p-4 font-black text-slate-500 italic text-lg uppercase">a{{
                                             item.index }}</td>
                                         <td class="p-4"><span class="text-white font-black text-2xl tracking-tighter">{{
-                                            item.proporcionX.toFixed(4) }}</span></td>
+                                            item.proporcionX.toFixed(2) }}</span></td>
                                         <td class="p-4 text-right pr-6 font-mono font-black text-indigo-400 text-lg">{{
-                                            item.aporteProteico.toFixed(3) }}%</td>
+                                            item.aporteProteico.toFixed(2) }}%</td>
                                     </tr>
                                 </tbody>
                                 <tfoot class="bg-indigo-600/10 border-t border-indigo-500/30">
                                     <tr class="font-black italic text-sm">
                                         <td class="p-4 text-[9px] text-indigo-400 uppercase tracking-tighter text-left">
                                             Totales</td>
-                                        <td class="p-4 text-emerald-400 text-xl font-black">100%</td>
+                                        <td class="p-4 text-emerald-400 text-xl font-black">100kg</td>
                                         <td class="p-4 text-right pr-6 text-white text-xl">{{
                                             resultados.aporteTotal.toFixed(2) }}%</td>
                                     </tr>
@@ -293,7 +270,7 @@ watch(objetivo, (nuevoValor, valorAnterior) => {
                                     }}</p>
                                 <div class="text-xl font-black text-indigo-100 italic">
                                     {{ val.toFixed(2) }}<span class="text-[10px] ml-0.5 text-indigo-500">{{ key === 'em'
-                                        ? '' : '%' }}</span>
+                                        ? '' : 'kg' }}</span>
                                 </div>
                             </div>
                         </div>
