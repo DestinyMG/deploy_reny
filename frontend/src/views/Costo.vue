@@ -113,191 +113,208 @@ const formatearMoneda = (valor) => {
 
 <template>
     <BaseAdmin>
-        <div class="max-w-[1300px] mx-auto px-2 sm:px-6 py-6 space-y-6">
+        <div class="max-w-[1300px] mx-auto px-3 sm:px-6 py-6 space-y-6">
 
-            <!-- Header -->
-            <div class="flex flex-col gap-4 border-b border-white/10 pb-6">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-2xl font-black text-white italic tracking-tighter uppercase">
+            <div class="flex flex-col gap-6 border-b border-white/10 pb-6">
+                <div class="flex flex-col xs:flex-row justify-between items-start xs:items-center gap-4">
+                    <h2 class="text-xl sm:text-2xl font-black text-white italic tracking-tighter uppercase shrink-0">
                         CALCULADORA DE <span class="text-emerald-400">COSTOS</span>
                     </h2>
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-2 w-full xs:w-auto">
                         <select v-model="moneda"
-                            class="bg-[#020617] border border-white/10 rounded-lg px-2 py-1 text-white text-xs font-black uppercase">
+                            class="flex-1 xs:flex-none bg-[#020617] border border-white/10 rounded-lg px-3 py-2 text-white text-xs font-black uppercase outline-none focus:border-emerald-500">
                             <option value="$">$ (USD)</option>
                             <option value="€">€ (EUR)</option>
                             <option value="£">£ (GBP)</option>
                             <option value="¥">¥ (JPY)</option>
                         </select>
                         <button v-if="resultados" @click="limpiarCalculo"
-                            class="text-[9px] font-black text-red-400 uppercase border border-red-500/20 px-3 py-1.5 rounded-lg">
+                            class="flex-1 xs:flex-none text-[10px] font-black text-red-400 uppercase border border-red-500/20 px-4 py-2 rounded-lg bg-red-500/5 hover:bg-red-500/10 transition-colors">
                             Reiniciar
                         </button>
                     </div>
                 </div>
 
-                <!-- Resumen rápido cuando hay resultados -->
-                <div v-if="resultados" class="grid grid-cols-3 gap-3">
-                    <div class="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-xl">
-                        <p class="text-[8px] font-black text-emerald-400 uppercase">Costo Total</p>
-                        <p class="text-xl font-black text-white">{{ formatearMoneda(resultados.costoTotal) }}</p>
+                <div v-if="resultados" class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div
+                        class="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-xl flex flex-col justify-center min-w-0">
+                        <p class="text-[9px] font-black text-emerald-400 uppercase mb-1 tracking-wider">Costo Total</p>
+                        <p class="text-xl sm:text-2xl font-black text-white break-all leading-none">
+                            {{ formatearMoneda(resultados.costoTotal) }}
+                        </p>
                     </div>
-                    <div class="bg-indigo-500/10 border border-indigo-500/30 p-3 rounded-xl">
-                        <p class="text-[8px] font-black text-indigo-400 uppercase">Cantidad Total</p>
-                        <p class="text-xl font-black text-white">{{ resultados.cantidadTotal.toFixed(2) }} kg</p>
+                    <div
+                        class="bg-indigo-500/10 border border-indigo-500/30 p-4 rounded-xl flex flex-col justify-center min-w-0">
+                        <p class="text-[9px] font-black text-indigo-400 uppercase mb-1 tracking-wider">Cantidad Total
+                        </p>
+                        <p class="text-xl sm:text-2xl font-black text-white break-all leading-none">
+                            {{ resultados.cantidadTotal.toFixed(2) }} <span class="text-xs text-indigo-400">kg</span>
+                        </p>
                     </div>
-                    <div class="bg-amber-500/10 border border-amber-500/30 p-3 rounded-xl">
-                        <p class="text-[8px] font-black text-amber-400 uppercase">Precio Promedio</p>
-                        <p class="text-xl font-black text-white">{{ formatearMoneda(resultados.precioPromedio) }}/kg</p>
+                    <div
+                        class="bg-amber-500/10 border border-amber-500/30 p-4 rounded-xl flex flex-col justify-center min-w-0">
+                        <p class="text-[9px] font-black text-amber-400 uppercase mb-1 tracking-wider">Precio Promedio
+                        </p>
+                        <p class="text-xl sm:text-2xl font-black text-white break-all leading-none">
+                            {{ formatearMoneda(resultados.precioPromedio) }}<span
+                                class="text-xs text-amber-400">/kg</span>
+                        </p>
                     </div>
                 </div>
             </div>
 
-            <!-- Tabla de ingredientes -->
-            <div class="bg-white/5 border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl">
-                <!-- Headers -->
+            <div
+                class="bg-white/5 border border-white/10 rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden shadow-2xl">
                 <div
-                    class="hidden sm:grid grid-cols-3 p-3 bg-white/5 border-b border-white/10 text-[9px] font-black text-slate-500 uppercase text-center tracking-widest">
+                    class="hidden sm:grid grid-cols-3 p-4 bg-white/5 border-b border-white/10 text-[10px] font-black text-slate-500 uppercase text-center tracking-widest">
                     <div>Ingrediente</div>
                     <div>Precio por kg</div>
                     <div>Cantidad (kg)</div>
                 </div>
 
-                <!-- Filas de ingredientes (nombres NO editables) -->
                 <div class="divide-y divide-white/5 bg-[#020617]/40">
                     <div v-for="(ing, idx) in ingredientes" :key="idx"
-                        class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 sm:p-3 items-center">
+                        class="flex flex-col sm:grid sm:grid-cols-3 gap-4 p-5 sm:p-3 items-center">
 
-                        <!-- Nombre (NO editable) -->
-                        <div class="flex items-center gap-2">
-                            <span class="text-lg font-black text-slate-600 italic w-8">#{{ idx + 1 }}</span>
-                            <span class="text-white font-medium text-sm">{{ ing.nombre }}</span>
+                        <div class="flex items-center gap-3 w-full">
+                            <span class="text-xl font-black text-slate-700 italic shrink-0">#{{ idx + 1 }}</span>
+                            <div class="flex-1 bg-white/5 px-3 py-2 rounded-lg border border-white/5">
+                                <span class="text-white font-bold text-sm truncate block">{{ ing.nombre }}</span>
+                            </div>
                         </div>
 
-                        <!-- Precio por kilo -->
-                        <div class="flex items-center gap-1">
-                            <span class="text-emerald-400 font-black text-lg">{{ moneda }}</span>
-                            <input type="number" v-model="ing.precioKilo" step="0.01" min="0"
-                                class="flex-1 bg-[#020617] border border-white/10 rounded-xl py-2.5 px-3 text-white font-black text-right outline-none focus:border-emerald-500 transition-all"
-                                placeholder="0.00" />
-                        </div>
+                        <div class="grid grid-cols-2 sm:contents gap-3 w-full">
+                            <div class="flex items-center gap-2 group">
+                                <span class="text-emerald-400 font-black text-lg w-4">{{ moneda }}</span>
+                                <input type="number" v-model="ing.precioKilo" step="0.01" min="0"
+                                    class="w-full bg-[#020617] border border-white/10 rounded-xl py-3 px-3 text-white font-black text-right outline-none focus:border-emerald-500 transition-all shadow-inner"
+                                    placeholder="0.00" />
+                            </div>
 
-                        <!-- Cantidad -->
-                        <div class="flex items-center gap-1">
-                            <input type="number" v-model="ing.cantidad" step="0.001" min="0"
-                                class="flex-1 bg-[#020617] border border-white/10 rounded-xl py-2.5 px-3 text-white font-black text-right outline-none focus:border-emerald-500 transition-all"
-                                placeholder="0.000" />
-                            <span class="text-slate-500 font-black text-sm">kg</span>
+                            <div class="flex items-center gap-2 group">
+                                <input type="number" v-model="ing.cantidad" step="0.001" min="0"
+                                    class="w-full bg-[#020617] border border-white/10 rounded-xl py-3 px-3 text-white font-black text-right outline-none focus:border-emerald-500 transition-all shadow-inner"
+                                    placeholder="0.000" />
+                                <span class="text-slate-500 font-black text-xs uppercase w-4">kg</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Botones de acción (siempre de 2 en 2) -->
                 <div v-if="!resultados"
-                    class="p-4 flex flex-col sm:flex-row gap-3 border-t border-white/10 bg-white/[0.02]">
-                    <div class="flex gap-2 w-full sm:w-auto">
+                    class="p-5 flex flex-col sm:flex-row gap-3 border-t border-white/10 bg-white/[0.02]">
+                    <div class="grid grid-cols-2 gap-3 w-full sm:w-auto">
                         <button @click="agregarPar"
-                            class="flex-1 sm:flex-none px-4 py-3 bg-emerald-500/10 text-emerald-400 rounded-xl text-[10px] font-black uppercase border border-emerald-500/20">
+                            class="px-4 py-4 bg-emerald-500/10 text-emerald-400 rounded-xl text-[10px] font-black uppercase border border-emerald-500/20 active:scale-95 transition-all">
                             + Agregar Par
                         </button>
                         <button @click="eliminarPar" v-if="ingredientes.length > 2"
-                            class="flex-1 sm:flex-none px-4 py-3 bg-red-500/10 text-red-400 rounded-xl text-[10px] font-black uppercase border border-red-500/20">
+                            class="px-4 py-4 bg-red-500/10 text-red-400 rounded-xl text-[10px] font-black uppercase border border-red-500/20 active:scale-95 transition-all">
                             - Quitar Par
                         </button>
                     </div>
                     <button @click="calcularCostos"
-                        class="w-full sm:ml-auto px-8 py-4 bg-emerald-600 text-white font-black rounded-xl uppercase text-xs tracking-widest shadow-lg active:scale-95 transition-all">
+                        class="w-full sm:ml-auto sm:w-64 py-4 bg-emerald-600 text-white font-black rounded-xl uppercase text-[11px] tracking-[0.2em] shadow-lg active:scale-95 transition-all">
                         Calcular Costos
                     </button>
                 </div>
             </div>
 
-            <!-- Mensaje de error -->
-            <p v-if="error"
-                class="p-3 bg-red-500/10 text-red-400 text-center font-bold rounded-xl text-[10px] uppercase tracking-wider">
-                {{ error }}
-            </p>
-
-            <!-- Tabla de resultados detallados -->
             <transition name="slide-up">
-                <div v-if="resultados" class="space-y-6">
+                <div v-if="resultados" class="space-y-6 pb-10">
 
-                    <!-- Tabla detallada -->
-                    <div class="bg-[#020617] border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl">
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-center">
+                    <div
+                        class="bg-[#020617] border border-white/10 rounded-[1.5rem] sm:rounded-[2rem] overflow-hidden shadow-2xl">
+                        <div class="overflow-x-auto scrollbar-hide">
+                            <table class="w-full text-center min-w-[600px] border-collapse">
                                 <thead
-                                    class="bg-white/5 border-b border-white/10 text-[9px] font-black text-slate-500 uppercase tracking-widest">
+                                    class="bg-white/5 border-b border-white/10 text-[10px] font-black text-slate-500 uppercase tracking-widest">
                                     <tr>
-                                        <th class="p-4">#</th>
-                                        <th class="p-4">Ingrediente</th>
+                                        <th class="p-4 text-left pl-6">#</th>
+                                        <th class="p-4 text-left">Ingrediente</th>
                                         <th class="p-4">Precio/kg</th>
                                         <th class="p-4">Cantidad</th>
                                         <th class="p-4 text-right pr-6">Costo Total</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-white/5">
-                                    <tr v-for="item in resultados.detalles" :key="item.index">
-                                        <td class="p-4 font-black text-slate-500 italic">{{ item.index }}</td>
-                                        <td class="p-4 font-medium text-white">{{ item.nombre }}</td>
-                                        <td class="p-4 text-emerald-400 font-black">{{ formatearMoneda(item.precioKilo)
-                                            }}/kg</td>
-                                        <td class="p-4 text-white font-black">{{ item.cantidad.toFixed(3) }} kg</td>
-                                        <td class="p-4 text-right pr-6 font-mono font-black text-emerald-400 text-lg">
+                                    <tr v-for="item in resultados.detalles" :key="item.index"
+                                        class="hover:bg-white/[0.02] transition-colors">
+                                        <td class="p-4 text-left pl-6 font-black text-slate-600 italic">#{{ item.index
+                                        }}</td>
+                                        <td class="p-4 text-left font-bold text-white uppercase text-xs">{{ item.nombre
+                                        }}</td>
+                                        <td class="p-4 text-emerald-400 font-black text-sm">{{
+                                            formatearMoneda(item.precioKilo) }}/kg</td>
+                                        <td class="p-4 text-white/70 font-black text-sm">{{ item.cantidad.toFixed(2) }}
+                                            kg</td>
+                                        <td
+                                            class="p-4 text-right pr-6 font-mono font-black text-emerald-400 text-lg sm:text-xl break-all">
                                             {{ formatearMoneda(item.costoTotal) }}
                                         </td>
                                     </tr>
                                 </tbody>
                                 <tfoot class="bg-emerald-600/10 border-t border-emerald-500/30">
-                                    <tr class="font-black italic text-sm">
+                                    <tr class="font-black italic">
                                         <td colspan="4"
-                                            class="p-4 text-[9px] text-emerald-400 uppercase tracking-tighter text-left">
-                                            COSTO TOTAL
-                                        </td>
-                                        <td class="p-4 text-right pr-6 text-white text-xl">
-                                            {{ formatearMoneda(resultados.costoTotal) }}
-                                        </td>
+                                            class="p-5 text-[10px] text-emerald-400 uppercase text-left pl-6 tracking-widest">
+                                            COSTO TOTAL FINAL</td>
+                                        <td class="p-5 text-right pr-6 text-white text-xl sm:text-3xl break-all">{{
+                                            formatearMoneda(resultados.costoTotal) }}</td>
                                     </tr>
                                 </tfoot>
                             </table>
                         </div>
                     </div>
 
-                    <!-- Resumen adicional -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="bg-indigo-500/5 border border-white/10 p-6 rounded-2xl">
-                            <p class="text-[8px] font-black text-slate-500 uppercase mb-2">Detalle de Cantidades</p>
-                            <div class="space-y-2">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div class="bg-indigo-500/5 border border-white/10 p-6 rounded-[2rem]">
+                            <p class="text-[10px] font-black text-indigo-400 uppercase mb-6 tracking-widest">
+                                Distribución de Cantidades</p>
+                            <div class="space-y-4">
                                 <div v-for="item in resultados.detalles" :key="item.index"
-                                    class="flex justify-between text-sm">
-                                    <span class="text-slate-400">{{ item.nombre }}</span>
-                                    <span class="text-white font-black">{{ item.cantidad.toFixed(2) }} kg</span>
+                                    class="flex items-center justify-between group">
+                                    <span
+                                        class="text-slate-400 text-xs font-bold group-hover:text-white transition-colors">{{
+                                            item.nombre }}</span>
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-white font-black text-sm">{{ item.cantidad.toFixed(2)
+                                        }}</span>
+                                        <span class="text-indigo-500/50 text-[10px] font-black uppercase">kg</span>
+                                    </div>
                                 </div>
-                                <div class="border-t border-white/10 pt-2 mt-2 flex justify-between font-black">
-                                    <span class="text-indigo-400">Total</span>
-                                    <span class="text-white">{{ resultados.cantidadTotal.toFixed(2) }} kg</span>
+                                <div class="border-t border-white/10 pt-4 mt-2 flex justify-between items-end">
+                                    <span class="text-indigo-400 font-black text-xs uppercase">Suma Total</span>
+                                    <span class="text-white text-2xl font-black italic">{{
+                                        resultados.cantidadTotal.toFixed(2) }} <span class="text-xs">kg</span></span>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="bg-amber-500/5 border border-white/10 p-6 rounded-2xl">
-                            <p class="text-[8px] font-black text-slate-500 uppercase mb-2">Análisis de Costos</p>
-                            <div class="space-y-3">
-                                <div>
-                                    <p class="text-xs text-slate-400 mb-1">Precio Promedio Ponderado</p>
-                                    <p class="text-3xl font-black text-amber-400">{{
-                                        formatearMoneda(resultados.precioPromedio) }}/kg</p>
+                        <div class="bg-amber-500/5 border border-white/10 p-6 rounded-[2rem]">
+                            <p class="text-[10px] font-black text-amber-400 uppercase mb-6 tracking-widest">Análisis de
+                                Impacto Económico</p>
+                            <div class="space-y-5">
+                                <div class="bg-[#020617] p-4 rounded-xl border border-white/5">
+                                    <p class="text-[9px] text-slate-500 font-black uppercase mb-1">Precio Promedio
+                                        Ponderado</p>
+                                    <p class="text-3xl font-black text-amber-400 italic break-all leading-none">
+                                        {{ formatearMoneda(resultados.precioPromedio) }}<span
+                                            class="text-xs ml-1">/kg</span>
+                                    </p>
                                 </div>
-                                <div class="pt-2 border-t border-white/10">
-                                    <p class="text-xs text-slate-400 mb-1">Distribución del Costo</p>
-                                    <div v-for="item in resultados.detalles" :key="item.index" class="mb-1">
-                                        <div class="flex justify-between text-xs">
+
+                                <div class="space-y-3">
+                                    <p class="text-[9px] text-slate-500 font-black uppercase tracking-tighter">
+                                        Participación en el Costo Total</p>
+                                    <div v-for="item in resultados.detalles" :key="item.index">
+                                        <div class="flex justify-between text-[10px] mb-1 font-bold">
                                             <span class="text-slate-400">{{ item.nombre }}</span>
-                                            <span class="text-white">{{ ((item.costoTotal / resultados.costoTotal) *
-                                                100).toFixed(2) }}%</span>
+                                            <span class="text-emerald-400">{{ ((item.costoTotal / resultados.costoTotal)
+                                                * 100).toFixed(2) }}%</span>
                                         </div>
-                                        <div class="w-full bg-white/5 h-1 rounded-full overflow-hidden">
-                                            <div class="bg-emerald-500 h-1 rounded-full"
+                                        <div class="w-full bg-white/5 h-1.5 rounded-full overflow-hidden">
+                                            <div class="bg-emerald-500 h-full rounded-full transition-all duration-1000"
                                                 :style="{ width: (item.costoTotal / resultados.costoTotal * 100) + '%' }">
                                             </div>
                                         </div>
@@ -313,22 +330,45 @@ const formatearMoneda = (valor) => {
 </template>
 
 <style scoped>
-.slide-up-enter-active {
-    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.slide-up-enter-from {
-    opacity: 0;
-    transform: translateY(30px);
-}
-
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
+/* Reset de inputs para evitar desbordamientos visuales */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-input[type="number"] {
+input[type=number] {
     -moz-appearance: textfield;
+}
+
+/* Scroll suave para tablas en móvil */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Animación de entrada */
+.slide-up-enter-active {
+    transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.slide-up-enter-from {
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+/* Ajustes para pantallas muy angostas */
+@media (max-width: 360px) {
+    .text-xl {
+        font-size: 1.125rem;
+    }
+
+    .text-2xl {
+        font-size: 1.25rem;
+    }
 }
 </style>
