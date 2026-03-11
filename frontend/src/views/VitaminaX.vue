@@ -282,7 +282,7 @@ watch(objetivo, (nuevoValor, valorAnterior) => {
                                             item.index }}</td>
                                         <td class="p-4 text-white/60">{{ item.valorOriginal?.toFixed(2) }}%</td>
                                         <td class="p-4"><span class="text-white font-black text-2xl tracking-tighter">{{
-                                            item.proporcionX.toFixed(2) }}</span> %KG</td>
+                                            item.proporcionX.toFixed(2) }}</span> KG</td>
                                         <td class="p-4 text-right pr-6 font-mono font-black text-indigo-400 text-lg">{{
                                             item.aporteProteico.toFixed(2) }}%</td>
                                     </tr>
@@ -357,7 +357,7 @@ watch(objetivo, (nuevoValor, valorAnterior) => {
                             <div v-for="(val, key) in resultados.nutriFinales" :key="key"
                                 class="bg-indigo-500/5 border border-white/10 p-4 rounded-2xl text-center">
                                 <p class="text-[8px] font-black text-slate-500 uppercase mb-1">{{ nombresNutrientes[key]
-                                    }}</p>
+                                }}</p>
                                 <div class="text-xl font-black text-indigo-100 italic">
                                     {{ val.toFixed(2) }}<span class="text-[10px] ml-0.5 text-indigo-500">{{ key === 'em'
                                         ? '' : '' }}</span>
