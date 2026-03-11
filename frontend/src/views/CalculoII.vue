@@ -199,7 +199,7 @@ watch(() => inputs.value.pv, (nuevoValor, valorAnterior) => {
                                         (%E)</span>
                                     <span
                                         class="text-3xl font-black text-white underline decoration-indigo-300 underline-offset-8">
-                                        {{ resultados.finalE }}%KG
+                                        {{ resultados.finalE }}%
                                     </span>
                                 </div>
                             </div>
@@ -233,10 +233,10 @@ watch(() => inputs.value.pv, (nuevoValor, valorAnterior) => {
                                         Nutriente</th>
                                     <th
                                         class="p-4 text-[10px] font-black text-indigo-400 uppercase tracking-widest text-center">
-                                        Ingr. A (%)</th>
+                                        Ingr. A</th>
                                     <th
                                         class="p-4 text-[10px] font-black text-indigo-400 uppercase tracking-widest text-center">
-                                        Ingr. B (%)</th>
+                                        Ingr. B </th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-white/5">
