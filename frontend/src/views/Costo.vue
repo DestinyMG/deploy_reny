@@ -271,11 +271,11 @@ const formatearMoneda = (valor) => {
                                 <div v-for="item in resultados.detalles" :key="item.index"
                                     class="flex justify-between text-sm">
                                     <span class="text-slate-400">{{ item.nombre }}</span>
-                                    <span class="text-white font-black">{{ item.cantidad.toFixed(3) }} kg</span>
+                                    <span class="text-white font-black">{{ item.cantidad.toFixed(2) }} kg</span>
                                 </div>
                                 <div class="border-t border-white/10 pt-2 mt-2 flex justify-between font-black">
                                     <span class="text-indigo-400">Total</span>
-                                    <span class="text-white">{{ resultados.cantidadTotal.toFixed(3) }} kg</span>
+                                    <span class="text-white">{{ resultados.cantidadTotal.toFixed(2) }} kg</span>
                                 </div>
                             </div>
                         </div>
@@ -294,7 +294,7 @@ const formatearMoneda = (valor) => {
                                         <div class="flex justify-between text-xs">
                                             <span class="text-slate-400">{{ item.nombre }}</span>
                                             <span class="text-white">{{ ((item.costoTotal / resultados.costoTotal) *
-                                                100).toFixed(1) }}%</span>
+                                                100).toFixed(2) }}%</span>
                                         </div>
                                         <div class="w-full bg-white/5 h-1 rounded-full overflow-hidden">
                                             <div class="bg-emerald-500 h-1 rounded-full"

@@ -20,14 +20,14 @@ const calculando = ref(false)
 const actualizando = ref(false)
 
 const nombresNutrientes = {
-    ms: 'kg MS',
-    em: 'kg EM',
-    fdn: 'kg FDN',
-    cen: 'kg Cen',
-    fc: 'kg FC',
-    ee: 'kg EE',
-    ca: 'kg Ca',
-    p: 'kg P'
+    ms: 'MS',
+    em: 'EM',
+    fdn: 'FDN',
+    cen: 'Cen',
+    fc: 'FC',
+    ee: 'EE',
+    ca: 'Ca',
+    p: 'P'
 }
 
 // --- GESTIÓN DE FILAS ---
@@ -282,7 +282,7 @@ watch(objetivo, (nuevoValor, valorAnterior) => {
                                             item.index }}</td>
                                         <td class="p-4 text-white/60">{{ item.valorOriginal?.toFixed(2) }}%</td>
                                         <td class="p-4"><span class="text-white font-black text-2xl tracking-tighter">{{
-                                            item.proporcionX.toFixed(2) }}</span>%</td>
+                                            item.proporcionX.toFixed(2) }}</span> %KG</td>
                                         <td class="p-4 text-right pr-6 font-mono font-black text-indigo-400 text-lg">{{
                                             item.aporteProteico.toFixed(2) }}%</td>
                                     </tr>
@@ -360,7 +360,7 @@ watch(objetivo, (nuevoValor, valorAnterior) => {
                                     }}</p>
                                 <div class="text-xl font-black text-indigo-100 italic">
                                     {{ val.toFixed(2) }}<span class="text-[10px] ml-0.5 text-indigo-500">{{ key === 'em'
-                                        ? '' : 'kg' }}</span>
+                                        ? '' : '' }}</span>
                                 </div>
                             </div>
                         </div>

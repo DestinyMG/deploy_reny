@@ -19,14 +19,14 @@ const actualizando = ref(false)
 const ultimaActualizacion = ref(0)
 
 const nombresNutrientes = {
-    ms: 'kg MS',
-    em: 'kg EM',
-    fdn: 'kg FDN',
-    cen: 'kg Cen',
-    fc: 'kg FC',
-    ee: 'kg EE',
-    ca: 'kg Ca',
-    p: 'kg P'
+    ms: 'MS',
+    em: 'EM',
+    fdn: 'FDN',
+    cen: 'Cen',
+    fc: 'FC',
+    ee: 'EE',
+    ca: 'Ca',
+    p: 'P'
 }
 
 // --- GESTIÓN DE FILAS ---
@@ -212,8 +212,12 @@ watch(objetivo, (nuevoValor, valorAnterior) => {
                                     <tr v-for="item in resultados.detalles" :key="item.index">
                                         <td class="p-4 font-black text-slate-500 italic text-lg uppercase">a{{
                                             item.index }}</td>
-                                        <td class="p-4"><span class="text-white font-black text-2xl tracking-tighter">{{
-                                            item.proporcionX.toFixed(2) }}</span></td>
+                                        <td class="p-4">
+                                            <span class="text-white font-black text-2xl tracking-tighter">
+                                                {{ item.proporcionX.toFixed(2) }}
+                                                <span class="text-sm font-medium text-slate-400 ml-1">% KG</span>
+                                            </span>
+                                        </td>
                                         <td class="p-4 text-right pr-6 font-mono font-black text-indigo-400 text-lg">{{
                                             item.aporteProteico.toFixed(2) }}%</td>
                                     </tr>
@@ -270,7 +274,7 @@ watch(objetivo, (nuevoValor, valorAnterior) => {
                                     }}</p>
                                 <div class="text-xl font-black text-indigo-100 italic">
                                     {{ val.toFixed(2) }}<span class="text-[10px] ml-0.5 text-indigo-500">{{ key === 'em'
-                                        ? '' : 'kg' }}</span>
+                                        ? '' : '' }}</span>
                                 </div>
                             </div>
                         </div>

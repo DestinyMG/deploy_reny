@@ -10,14 +10,14 @@ const error = ref('')
 // --- LÓGICA DE APORTES NUTRICIONALES ---
 const mostrarAportes = ref(false)
 const nutrientes = ref([
-    { id: 'ms', label: 'kg Materia Seca (MS)', a: 0, b: 0 },
+    { id: 'ms', label: ' Materia Seca (MS)', a: 0, b: 0 },
     { id: 'em', label: 'En. Metabólica (EM)', a: 0, b: 0 },
-    { id: 'fdb', label: 'kg Fibra Det. Neutro (FDN)', a: 0, b: 0 },
-    { id: 'cen', label: 'kg Ceniza', a: 0, b: 0 },
-    { id: 'fc', label: 'kg Fibra Cruda', a: 0, b: 0 },
-    { id: 'ee', label: 'kg Ext. Etéreo (EE)', a: 0, b: 0 },
-    { id: 'ca', label: 'kg Calcio (Ca)', a: 0, b: 0 },
-    { id: 'p', label: 'kg Fósforo (P)', a: 0, b: 0 },
+    { id: 'fdb', label: 'Fibra Det. Neutro (FDN)', a: 0, b: 0 },
+    { id: 'cen', label: 'Ceniza', a: 0, b: 0 },
+    { id: 'fc', label: 'Fibra Cruda', a: 0, b: 0 },
+    { id: 'ee', label: 'Ext. Etéreo (EE)', a: 0, b: 0 },
+    { id: 'ca', label: 'Calcio (Ca)', a: 0, b: 0 },
+    { id: 'p', label: 'Fósforo (P)', a: 0, b: 0 },
 ])
 
 // --- FACTOR DE VITAMINA ---
@@ -199,7 +199,7 @@ watch(() => inputs.value.pv, (nuevoValor, valorAnterior) => {
                                         (%E)</span>
                                     <span
                                         class="text-3xl font-black text-white underline decoration-indigo-300 underline-offset-8">
-                                        {{ resultados.finalE }}kg
+                                        {{ resultados.finalE }}%KG
                                     </span>
                                 </div>
                             </div>
